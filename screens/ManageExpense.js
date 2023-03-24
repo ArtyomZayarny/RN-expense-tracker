@@ -39,7 +39,7 @@ const ManageExpense = ({ route }) => {
       expenseCtx.updateExpense(id, expenseData);
     } else {
       storeExpense(expenseData);
-      // expenseCtx.addExpense(expenseData);
+      expenseCtx.addExpense(expenseData);
     }
     navigation.goBack();
   };
