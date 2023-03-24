@@ -8,9 +8,11 @@ import { ExpenseContext } from '../context/expense-context';
 import { ExpenseForm } from '../components/ManageExpense/ExpenseForm';
 import { deleteExpense, storeExpense, updateExpense } from '../util/http';
 import { LoadingOverlay } from '../components/UI/LoadingOverlay';
+import { ErrorOverlay } from '../components/UI/ErrorOverlay';
 
 const ManageExpense = ({ route }) => {
   const [isSubmitting, seIsSubmitting] = useState(false);
+  const [error, setError] = useState();
   const expenseCtx = useContext(ExpenseContext);
   const navigation = useNavigation();
   const id = route.params?.expenseId;
@@ -29,10 +31,13 @@ const ManageExpense = ({ route }) => {
 
   const deleteExpenseHandler = async () => {
     seIsSubmitting(true);
-    await deleteExpense(id);
-
-    expenseCtx.deleteExpense(id);
-    navigation.goBack();
+    try {
+      await deleteExpense(id);
+      expenseCtx.deleteExpense(id);
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not delete expense - please try again later!');
+    }
   };
 
   const cancelHandler = () => {
@@ -41,15 +46,24 @@ const ManageExpense = ({ route }) => {
 
   const confirmHandler = async (expenseData) => {
     seIsSubmitting(true);
-    if (isEditing) {
-      expenseCtx.updateExpense(id, expenseData);
-      await updateExpense(id, expenseData);
-    } else {
-      const id = await storeExpense(expenseData);
-      expenseCtx.addExpense({ ...expenseData }, id);
+    try {
+      if (isEditing) {
+        expenseCtx.updateExpense(id, expenseData);
+        await updateExpense(id, expenseData);
+      } else {
+        const id = await storeExpense(expenseData);
+        expenseCtx.addExpense({ ...expenseData }, id);
+      }
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not save the data - please try again later');
+      seIsSubmitting(false);
     }
-    navigation.goBack();
   };
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} />;
+  }
 
   if (isSubmitting) {
     return <LoadingOverlay />;
