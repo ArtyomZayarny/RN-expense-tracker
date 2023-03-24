@@ -3,7 +3,11 @@ import axios from 'axios';
 const ROOT_DB = 'https://expese-app-d9626-default-rtdb.firebaseio.com';
 
 export const storeExpense = async (expenseData) => {
-  await axios.post(ROOT_DB + '/expenses.json', expenseData);
+  const response = await axios.post(ROOT_DB + '/expenses.json', expenseData);
+
+  const id = response.data.name;
+
+  return id;
 };
 
 export const fetchExpenses = async () => {
@@ -21,4 +25,11 @@ export const fetchExpenses = async () => {
     expenses.push(expenseObj);
   }
   return expenses;
+};
+
+export const updateExpense = (id, expenseData) => {
+  return axios.put(ROOT_DB + `/expenses/${id}.json`, expenseData);
+};
+export const deleteExpense = (id) => {
+  return axios.delete(ROOT_DB + `/expenses/${id}.json`);
 };
