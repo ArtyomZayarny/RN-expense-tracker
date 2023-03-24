@@ -14,15 +14,15 @@ export const ExpenseForm = ({
 }) => {
   const [inputs, setInputs] = useState({
     amount: {
-      value: defaultValues ? defaultValues.amount.toString() : '',
+      value: defaultValues?.amount ? defaultValues.amount.toString() : '',
       isValid: true,
     },
     date: {
-      value: defaultValues ? getFormattedDate(defaultValues.date) : '',
+      value: defaultValues?.date ? getFormattedDate(defaultValues.date) : '',
       isValid: true,
     },
     description: {
-      value: defaultValues ? defaultValues.description : '',
+      value: defaultValues?.description ? defaultValues.description : '',
       isValid: true,
     },
   });

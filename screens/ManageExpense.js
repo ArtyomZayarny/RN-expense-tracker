@@ -72,7 +72,7 @@ const ManageExpense = ({ route }) => {
   return (
     <View style={styles.container}>
       <ExpenseForm
-        defaultValues={selectedExpense}
+        defaultValues={isEditing ? selectedExpense : {}}
         submitButtonLabel={isEditing ? 'Update' : 'Add'}
         onCancel={cancelHandler}
         onSubmit={confirmHandler}
