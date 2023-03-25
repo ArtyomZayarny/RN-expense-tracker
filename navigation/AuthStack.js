@@ -11,6 +11,9 @@ export const AuthStack = () => {
       screenOptions={{
         headerStyle: { backgroundColor: GlobalStyles.color.primary500 },
         headerTintColor: 'white',
+        contentStyle: {
+          backgroundColor: GlobalStyles.color.primary200,
+        },
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />

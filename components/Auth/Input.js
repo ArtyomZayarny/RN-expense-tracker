@@ -17,7 +17,6 @@ export const Input = ({
       <TextInput
         style={[styles.input, isInvalid && styles.inputInvalid]}
         autoCapitalize={false}
-        autoCapitalize="none"
         keyboardType={keyboardType}
         secureTextEntry={secure}
         onChangeText={onUpdateValue}
@@ -48,6 +47,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputInvalid: {
-    backgroundColor: GlobalStyles.color.error100,
+    backgroundColor: GlobalStyles.color.error50,
   },
 });
