@@ -1,14 +1,16 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-
+import { AuthContext } from '../context/auth-context';
 import { GlobalStyles } from '../constants/style';
 import AllExpenses from '../screens/AllExpenses';
 import RecentExpenses from '../screens/RecentExpenses';
 import { IconButton } from '../components/UI/IconButton';
+import { useContext } from 'react';
 
 const BottomTabs = createBottomTabNavigator();
 
 export const ExpensesOverview = () => {
+  const AuthCtx = useContext(AuthContext);
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -36,6 +38,14 @@ export const ExpensesOverview = () => {
         name="RecentExpenses"
         component={RecentExpenses}
         options={{
+          headerLeft: ({ tintColor }) => (
+            <IconButton
+              icon="exit"
+              color={tintColor}
+              size={24}
+              onPress={AuthCtx.logout}
+            />
+          ),
           title: 'Recent Expenses',
           tabBarLabel: 'Recent',
           tabBarIcon: ({ color, size }) => (
