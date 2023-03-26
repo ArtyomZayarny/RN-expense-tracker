@@ -99,8 +99,6 @@ export const ExpenseForm = ({
         invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
-          // autoCorrect: false,
-          // autoCapitalize: 'none',
           onChangeText: inputChangedHandler.bind(this, 'description'),
           value: inputs.description.value,
         }}
